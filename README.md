@@ -21,6 +21,6 @@ To install it visit https://nodejs.org/en/ and choose 10.x.x version.
 2. Type "npm install".
 3. Meanwhile, launch Mongod server.
 4. Once npm is done, type "npm server" in this console.
-5. Launch another console, go the same folder and type "npm start".
+5. Launch **another console**, go the same folder and type "npm start".
 
 A browser should automatically direct you to [Echo](http://localhost:3000).
