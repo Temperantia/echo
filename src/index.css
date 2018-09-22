@@ -1,0 +1,14 @@
+body {
+  font: 14px 'Century Gothic', Futura, sans-serif;
+}
+
+a {
+    cursor: pointer;
+    color: #428BCA;
+    text-decoration: none;
+}
+
+a:hover {
+  color: #2A6496 !important;
+  text-decoration: underline !important;
+}
