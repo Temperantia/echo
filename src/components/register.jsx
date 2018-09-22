@@ -33,6 +33,7 @@ class Register extends React.Component {
   }
 
   register = () => {
+    console.log("ok")
     axios.post(config.get('API_URL') + '/authentication/user/create', {
       user: {
         type: this.state.population,
@@ -44,6 +45,8 @@ class Register extends React.Component {
       }
     }).then(res => {
       this.props.login({id: res.data.id, token: res.data.token});
+    }).catch(err => {
+      console.log(err);
     });
   }
 
