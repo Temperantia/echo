@@ -8,6 +8,7 @@ Reputation Social Network
 Echo uses MongoDB.
 To install it visit https://www.mongodb.com/download-center/v2/community.
 After the installation, you will need to create /data/db folder at the root of your PC in order to store local data.
+Mongod pathfolder on Windows: C:\Program Files\MongoDB\Server\x.x\bin
 
 ### Node Installation
 
