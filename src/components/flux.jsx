@@ -1,6 +1,5 @@
 import React from 'react';
 import config from 'react-global-configuration';
-import Header from './header';
 import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
 import CardActions from '@material-ui/core/CardActions';
@@ -18,11 +17,17 @@ import ExposurePlus2 from '@material-ui/icons/ExposurePlus2';
 import axios from 'axios';
 import pluralize from 'pluralize';
 
+import Header from './header';
+
 class Flux extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: []
+      posts: [],
+      filter: {
+        origin: 'Tendance+DailyLife+LifeStyle+Friends',
+        postType: 'Echo+Inquiry+Outrage+Rumour',
+      }
     };
   }
 
@@ -31,7 +36,7 @@ class Flux extends React.Component {
   }
 
   getPosts = async () => {
-    let posts = (await axios.get(config.get('API_URL') + '/posting/posts/get?type=Flux&origin=Tendance+DailyLife&postType=Echo&sort=Popular')).data;
+    const posts = (await axios.get(config.get('API_URL') + '/posting/posts/get?' + this.buildRequest())).data;
     for (let post of posts) {
       const date = new Date(post.createdOn);
       post.createdOn = date.toLocaleDateString('en-US', {
@@ -42,6 +47,30 @@ class Flux extends React.Component {
     }
     this.setState(state => ({ posts: posts }));
   };
+
+  buildRequest = () => {
+    let request = 'type=Flux'
+    + "&origin=" + this.state.filter.origin
+    + "&postType=" + this.state.filter.postType;
+    if (this.state.filter.sort) {
+      request += "&sort=" + this.state.filter.sort;
+    }
+    if (this.state.filter.tags) {
+      request += "&tags=" + this.state.filter.tags;
+    }
+    if (this.state.filter.from) {
+      request += "&from=" + this.state.filter.from;
+    }
+    if (this.state.filter.to) {
+      request += "&to=" + this.state.filter.to;
+    }
+    return request;
+  }
+
+  filterPosts = async filter => {
+    await this.setState(state => ({ filter: filter }));
+    this.getPosts();
+  }
 
   vote = (id, coefficient) => async event => {
     const url = config.get('API_URL') + '/posting/post/' + id + '/'
@@ -65,7 +94,7 @@ class Flux extends React.Component {
   render() {
     return pug`
       .container-fluid
-        Header(logout=this.props.logout refreshFlux=this.getPosts)
+        Header(logout=this.props.logout refreshFlux=this.getPosts filterPosts=this.filterPosts)
         .row
           .col-12
             each post in this.state.posts

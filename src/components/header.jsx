@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Settings from '@material-ui/icons/Settings';
 import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import Echo from './echo';
+import FluxFilter from './flux-filter';
 
 class Header extends React.Component {
   constructor(props) {
@@ -15,11 +16,13 @@ class Header extends React.Component {
   }
 
   handleTab = tab => event => {
-    this.setState(state => ({tab: tab}));
+    const newTab = (tab === this.state.tab ? '' : tab);
+    this.setState(state => ({tab: newTab}));
   };
 
   changeTab = tab => {
-    this.setState(state => ({tab: tab}));
+    const newTab = (tab === this.state.tab ? '' : tab);
+    this.setState(state => ({tab: newTab}));
   }
 
   render() {
@@ -53,12 +56,14 @@ class Header extends React.Component {
               ='Flux'
         .col-2
           .text-center
-            IconButton(color='primary' onClick=this.filter)
+            IconButton(color='primary' onClick=this.handleTab('filter'))
               Settings
       .row
         .col-12
           if this.state.tab === 'echo'
             Echo(handleTab=this.handleTab changeTab=this.changeTab refreshFlux=this.props.refreshFlux)
+          if this.state.tab === 'filter'
+            FluxFilter(changeTab=this.changeTab filterPosts=this.props.filterPosts)
 
     `;
   }
