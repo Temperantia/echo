@@ -55,9 +55,10 @@ class Header extends React.Component {
             NavLink(exact to='/flux' activeClassName='selected' style={color: 'black'} activeStyle={color: 'blue'})
               ='Flux'
         .col-2
-          .text-center
-            IconButton(color='primary' onClick=this.handleTab('filter'))
-              Settings
+          if window.location.pathname === '/flux'
+            .text-center
+              IconButton(color='primary' onClick=this.handleTab('filter'))
+                Settings
       .row
         .col-12
           if this.state.tab === 'echo'
