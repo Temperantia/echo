@@ -13,7 +13,7 @@ mongoose.connect('mongodb://localhost/dev', {useNewUrlParser: true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
-const PORT = 8080;
+const PORT = 8000;
 const app = express();
 app.use(helmet());
 app.use(cors());
